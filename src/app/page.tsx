@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Home() {
 
@@ -31,13 +32,20 @@ export default async function Home() {
 
       <h2 className="text-2xl font-bold">Items for Bid</h2>
 
+      <div className="grid grid-cols-4 gap-4">
       {
         allItems.map((item) => (
-          <div key={item.id}>
-            <h2>{item.name}</h2>
-          </div>
+          <Card key={item.id}>
+            <CardHeader>
+              <CardTitle>{item.name}</CardTitle>
+            </CardHeader>
+          </Card>
         ))
       }
+      </div>
+
+
+
     </main>
   );
 }
