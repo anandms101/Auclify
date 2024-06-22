@@ -3,8 +3,10 @@ import { SignOut } from "@/components/sign-out";
 import { auth } from "@/auth";
 import { SignIn } from "@/components/sign-in";
 import Link from "next/link";
-import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@radix-ui/react-navigation-menu";
+import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { ModeToggle } from "@/components/mode-toggle";
+import { navigationMenuTriggerStyle  } from "@/components/ui/navigation-menu"
+
 
 export async function Header() {
     const session = await auth();
@@ -48,8 +50,10 @@ export async function Header() {
                             />
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <Link href="/item/create/">
+                            <Link href="/item/create/" legacyBehavior passHref>
+                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 Create an Item
+                                </NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>
                     </div>
