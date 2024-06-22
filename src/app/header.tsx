@@ -5,7 +5,7 @@ import { SignIn } from "@/components/sign-in";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { ModeToggle } from "@/components/mode-toggle";
-import { navigationMenuTriggerStyle  } from "@/components/ui/navigation-menu"
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
 
 
 export async function Header() {
@@ -42,17 +42,19 @@ export async function Header() {
                 <NavigationMenuList className="flex flex-row items-center justify-between max-h-20">
                     <div className="flex flex-row items-center">
                         <NavigationMenuItem className="pt-4 hover:scale-110 transition-transform duration-300">
-                            <Image
-                                src="/images/brand-logo/logo_transparent.png"
-                                alt="Auclify"
-                                width={130}
-                                height={130}
-                            />
+                            <Link href="/">
+                                <Image
+                                    src="/images/brand-logo/logo_transparent.png"
+                                    alt="Auclify"
+                                    width={130}
+                                    height={130}
+                                />
+                            </Link>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
                             <Link href="/items/create/" legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                Create an Item
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Create an Item
                                 </NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>

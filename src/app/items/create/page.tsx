@@ -2,8 +2,8 @@ import { database } from "@/db/database";
 import { items } from "@/db/schema";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
     
@@ -23,7 +23,7 @@ export default async function Home() {
           userId: session?.user?.id!,
           startingPrice: Number(formData.get("startingPrice")),
         });
-        revalidatePath("/");
+        redirect("/");
       }}>
         <Input required className="max-w-lg" name="name" placeholder="Name your item" />
         <Input required type="number" name="startingPrice" placeholder="Starting price" />
