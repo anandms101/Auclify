@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { SignIn } from "@/components/sign-in";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList } from "@radix-ui/react-navigation-menu";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export async function Header() {
     const session = await auth();
@@ -35,7 +36,7 @@ export async function Header() {
                     </div>
                 </div>
             </div> */}
-            <NavigationMenu className="bg-gray-100">
+            <NavigationMenu className="shadow-md">
                 <NavigationMenuList className="flex flex-row items-center justify-between max-h-20">
                     <div className="flex flex-row items-center">
                         <NavigationMenuItem className="pt-4 hover:scale-110 transition-transform duration-300">
@@ -52,9 +53,10 @@ export async function Header() {
                             </Link>
                         </NavigationMenuItem>
                     </div>
-                    <div className="flex flex-row mr-4 items-center">
+                    <div className="flex flex-row mr-4 items-center gap-4">
                         <span className="pr-2">{session?.user?.name}</span>
                         <span>{session ? <SignOut /> : <SignIn />}</span>
+                        <span><ModeToggle ></ModeToggle></span>
                     </div>
                 </NavigationMenuList>
             </NavigationMenu>
