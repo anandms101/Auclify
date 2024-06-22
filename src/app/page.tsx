@@ -1,14 +1,9 @@
-import Image from "next/image";
 import { database } from "@/db/database";
 import { bids as bidsSchema, items } from "@/db/schema";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { revalidatePath } from "next/cache";
-import { SignIn } from "@/components/sign-in";
 import { auth } from "@/auth";
-import { SignOut } from "@/components/sign-out";
-
-
 
 export default async function Home() {
 
@@ -21,14 +16,8 @@ export default async function Home() {
 
   return (
     <main className="container mx-auto py-12">
-
-      {session ?
-        <SignOut />
-        :
-        <SignIn />
-      }
-      {session?.user && <span>{session.user.name}</span>}
-      <form action={async (formData: FormData) => {
+      <h1 className="text-4xl font-bold">Items</h1>
+      <form className="flex flex-col border p-8 rounded-xl space-y-4 max-w-md" action={async (formData: FormData) => {
         "use server"
         await database.insert(items).values({
           name: formData.get("name") as string,
@@ -36,9 +25,11 @@ export default async function Home() {
         });
         revalidatePath("/");
       }}>
-        <Input name="name" placeholder="Name your item" />
-        <Button type="submit">Post Item</Button>
+        <Input className="max-w-lg" name="name" placeholder="Name your item" />
+        <Button className="self-end" type="submit">Post Item</Button>
       </form>
+
+      <h2 className="text-2xl font-bold">Items for Bid</h2>
 
       {
         allItems.map((item) => (
