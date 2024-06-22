@@ -50,7 +50,7 @@ export async function Header() {
                             />
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <Link href="/item/create/" legacyBehavior passHref>
+                            <Link href="/items/create/" legacyBehavior passHref>
                             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                                 Create an Item
                                 </NavigationMenuLink>

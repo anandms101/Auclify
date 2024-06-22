@@ -1,6 +1,6 @@
 import { database } from "@/db/database";
 import { auth } from "@/auth";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Home() {
 
@@ -20,6 +20,7 @@ export default async function Home() {
             <Card key={item.id}>
               <CardHeader>
                 <CardTitle>{item.name}</CardTitle>
+                <CardDescription>{item.startingPrice}</CardDescription>
               </CardHeader>
             </Card>
           ))

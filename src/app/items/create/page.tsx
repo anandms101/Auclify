@@ -20,11 +20,13 @@ export default async function Home() {
         "use server"
         await database.insert(items).values({
           name: formData.get("name") as string,
-          userId: session?.user?.id!
+          userId: session?.user?.id!,
+          startingPrice: Number(formData.get("startingPrice")),
         });
         revalidatePath("/");
       }}>
-        <Input className="max-w-lg" name="name" placeholder="Name your item" />
+        <Input required className="max-w-lg" name="name" placeholder="Name your item" />
+        <Input required type="number" name="startingPrice" placeholder="Starting price" />
         <Button className="self-end" type="submit">Post Item</Button>
       </form>
     </main>
