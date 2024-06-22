@@ -27,6 +27,7 @@ export default async function Home() {
       }}>
         <Input required className="max-w-lg" name="name" placeholder="Name your item" />
         <Input required type="number" name="startingPrice" placeholder="Starting price" />
+        <Input required type="file" name="image" />
         <Button className="self-end" type="submit">Post Item</Button>
       </form>
     </main>
