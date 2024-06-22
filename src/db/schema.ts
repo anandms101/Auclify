@@ -66,3 +66,11 @@ export const verificationTokens = pgTable(
 export const bids = pgTable("auclify_bids", {
   id: serial("id").primaryKey(),
 });
+
+export const items = pgTable("auclify_items", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  userId: text("userId").notNull().references(() => users.id, {onDelete: "cascade"}),
+});
+
+
