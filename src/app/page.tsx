@@ -2,9 +2,10 @@ import { database } from "@/db/database";
 import { auth } from "@/auth";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import { env } from "@/env";
 
 function getImageUrlFromR2Url(itemImageName: string) {
-  return `https://pub-0590923952344a11800d21ad5b1e040b.r2.dev/${itemImageName}`;
+  return `${env.NEXT_PUBLIC_BUCKET_URL}${itemImageName}`;
 }
 
 export default async function Home() {
