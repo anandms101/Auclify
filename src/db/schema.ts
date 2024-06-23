@@ -72,6 +72,7 @@ export const items = pgTable("auclify_items", {
   name: text("name").notNull(),
   userId: text("userId").notNull().references(() => users.id, {onDelete: "cascade"}),
   startingPrice: integer("startingPrice").notNull().default(0),
+  image: text("image").notNull().default(""),
 });
 
 

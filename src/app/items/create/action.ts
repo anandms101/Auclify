@@ -22,15 +22,13 @@ export async function createItemAction(formData: FormData){
     const uploadFormData = new FormData();
     await fetch(uploadUrl, {
         method: "PUT",
-        body: uploadFormData,
-        headers: {
-        "Content-Type": file.type,
-        }
+        body: file,
     });
     await database.insert(items).values({
         name: formData.get("name") as string,
         userId: session?.user?.id!,
         startingPrice: Number(formData.get("startingPrice")),
+        image: file.name,
     });
     redirect("/")
 }
