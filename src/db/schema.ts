@@ -73,6 +73,7 @@ export const items = pgTable("auclify_items", {
   userId: text("userId").notNull().references(() => users.id, {onDelete: "cascade"}),
   startingPrice: integer("startingPrice").notNull().default(0),
   image: text("image").notNull().default(""),
+  bidIntervel: integer("bidIntervel").notNull().default(100),
 });
 
 export type Item = typeof items.$inferSelect;

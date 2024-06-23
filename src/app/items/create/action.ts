@@ -29,6 +29,7 @@ export async function createItemAction(formData: FormData){
         userId: session?.user?.id!,
         startingPrice: Number(formData.get("startingPrice")),
         image: file.name,
+        bidIntervel: Number(formData.get("bidIntervel")),
     });
     redirect("/")
 }

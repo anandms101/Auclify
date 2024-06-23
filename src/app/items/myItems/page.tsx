@@ -1,6 +1,6 @@
 import { database } from "@/db/database";
 import { auth } from "@/auth";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { env } from "@/env";
 import { eq, is } from "drizzle-orm";
@@ -37,6 +37,11 @@ export default async function Home() {
         <CardContent>
           <Image src={getImageUrlFromR2Url(item.image)} alt={item.name} width={200} height={200} />
         </CardContent>
+        <CardFooter>
+          <Link href={`/items/${item.id}/`}>
+            <Button>Buy this item</Button>
+          </Link>
+        </CardFooter>
       </Card>
     )
   }
