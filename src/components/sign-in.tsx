@@ -11,7 +11,6 @@ export function SignIn() {
             }}
         >
             <Button type="submit">SignIn</Button>
-            {/* <button type="submit">Signin with Google</button> */}
         </form>
     )
 } 
