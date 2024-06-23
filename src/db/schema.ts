@@ -75,4 +75,6 @@ export const items = pgTable("auclify_items", {
   image: text("image").notNull().default(""),
 });
 
+export type Item = typeof items.$inferSelect;
+
 
