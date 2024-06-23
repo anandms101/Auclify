@@ -13,31 +13,6 @@ export async function Header() {
 
     return (
         <>
-            {/* <div className="bg-gray-100 ">
-                <div className="container flex justify-between items-center max-h-20">
-                    <div className="flex pt-4 items-center">
-                        <Link href="/">
-                            <div className="hover:scale-110 transition-transform duration-300">
-                                <Image
-                                    src="/images/brand-logo/logo_transparent.png"
-                                    alt="Auclify"
-                                    width={130}
-                                    height={130}
-                                />
-                            </div>
-                        </Link>
-                        <div>
-                            <Link href="/items/create/">
-                                Create Item
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="flex items-center">
-                        <span className="pr-2">{session?.user?.name}</span>
-                        <span>{session ? <SignOut /> : <SignIn />}</span>
-                    </div>
-                </div>
-            </div> */}
             <NavigationMenu className="shadow-md">
                 <NavigationMenuList className="flex flex-row items-center justify-between max-h-20">
                     <div className="flex flex-row items-center">
@@ -52,9 +27,19 @@ export async function Header() {
                             </Link>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
+                            <Link href="/" legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    Available Item(s)
+                                </NavigationMenuLink>
+                            </Link>
                             <Link href="/items/create/" legacyBehavior passHref>
                                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Create an Item
+                                    Sell an Item
+                                </NavigationMenuLink>
+                            </Link>
+                            <Link href="/items/myItems/" legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                    My Item(s)
                                 </NavigationMenuLink>
                             </Link>
                         </NavigationMenuItem>
