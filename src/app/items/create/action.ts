@@ -5,6 +5,7 @@ import { items } from "@/db/schema";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { getSignedUrlForS3Object } from "@/lib/s3";
+import { start } from "repl";
 
 export async function createUploadUrl(key: string, type: string) {
   return await getSignedUrlForS3Object(key, type);
@@ -29,7 +30,8 @@ export async function createItemAction(formData: FormData){
         userId: session?.user?.id!,
         startingPrice: Number(formData.get("startingPrice")),
         image: file.name,
-        bidIntervel: Number(formData.get("bidIntervel")),
+        bidInterval: Number(formData.get("bidInterval")),
+        currentBid: Number(formData.get("startingPrice")),
     });
     redirect("/")
 }

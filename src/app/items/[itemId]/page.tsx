@@ -1,12 +1,14 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { database } from "@/db/database";
-import { Item, items } from "@/db/schema";
+import { Item, items, bids } from "@/db/schema";
 import { env } from "@/env";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
+import { createBidAction } from "@/app/items/[itemId]/actions";
+import { formatDistance } from 'date-fns';
 
 export default async function ItemPage(
     { params: { itemId } }: { params: { itemId: string } }
@@ -34,6 +36,10 @@ export default async function ItemPage(
         return `${env.NEXT_PUBLIC_BUCKET_URL}${itemImageName}`;
     }
 
+    function formatDate(timestamp: Date) {
+        return formatDistance(timestamp, new Date(), { addSuffix: true })
+    }
+
     const CardComponent = ({ item }: { item: Item }) => {
         return (
             <Card key={item.id} className="flex flex-col space-y-4 justify-center items-center">
@@ -46,42 +52,12 @@ export default async function ItemPage(
                 <CardFooter>
                     <span className="flex flex-col">
                         <span>Starting price <Badge>{item.startingPrice}</Badge></span>
-                        <span>Bid intervel <Badge variant="secondary">{item.bidIntervel}</Badge></span>
+                        <span>Bid intervel <Badge variant="secondary">{item.bidInterval}</Badge></span>
                     </span>
                 </CardFooter>
             </Card>
         )
     }
-
-    const bids = [
-        {
-            id: 1,
-            amount: 100,
-            bidder: "John Doe",
-            createdAt: new Date(),
-        },
-        {
-            id: 2,
-            amount: 200,
-            bidder: "Jane Doe",
-            createdAt: new Date(),
-        },
-        {
-            id: 3,
-            amount: 300,
-            bidder: "John Doe",
-            createdAt: new Date()
-        },
-    ]
-
-    // const bids: Bid[] = [];
-
-    // interface Bid {
-    //     id: number;
-    //     amount: number;
-    //     bidder: string;
-    //     createdAt: Date;
-    // }
 
     const CurrentBidsComponent = () => {
         return (
@@ -91,22 +67,37 @@ export default async function ItemPage(
                         <CardTitle>Bids placed</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        {bids.map((bid) => (
-                            <div key={bid.id}>
-                                <span>{bid.bidder}</span>
-                                <span>{bid.amount}</span>
+                        {allBids.map((bid) => (
+                            <div key={bid.id} className="flex flex-row gap-6">
+                                <span className="font-bold ">{bid.user.name}</span>
+                                <span>{formatDate(bid.timestamp)}</span>
                             </div>
                         ))}
                     </CardContent>
                     <CardFooter>
                         <span className="flex flex-col">
-                            <Link href="/"><Button> Place a Bid </Button></Link>
+                            <form action={createBidAction.bind(null, item.id)}>
+                                <Button > Place a Bid </Button>
+                            </form>
                         </span>
                     </CardFooter>
                 </Card>
             </>
         )
     }
+
+    const allBids = await database.query.bids.findMany({
+        where: eq(bids.itemId, parseInt(itemId)),
+        orderBy: desc(bids.id),
+        with: {
+            user: {
+                columns: {
+                    image: true,
+                    name: true
+                }
+            }
+        },
+    });
 
     const EmptyBidsComponent = () => {
         return (
@@ -120,7 +111,9 @@ export default async function ItemPage(
                     </CardContent>
                     <CardFooter>
                         <span className="flex flex-col">
-                            <Link href="/"><Button> Place a Bid </Button></Link>
+                            <form action={createBidAction.bind(null, item.id)}>
+                                <Button> Place a Bid </Button>
+                            </form>
                         </span>
                     </CardFooter>
                 </Card>
@@ -130,12 +123,12 @@ export default async function ItemPage(
 
     return (
         <>
-            <main className="grid grid-cols-2 gap-4 container mx-auto py-12" style={{gridTemplateColumns: '1fr 1.5fr'}}>
+            <main className="grid grid-cols-2 gap-4 container mx-auto py-12" style={{ gridTemplateColumns: '1fr 1.5fr' }}>
                 <div>
                     <CardComponent item={item} />
                 </div>
                 <div>
-                    {bids.length === 0 ? <EmptyBidsComponent /> : <CurrentBidsComponent />}
+                    {allBids.length === 0 ? <EmptyBidsComponent /> : <CurrentBidsComponent />}
                 </div>
             </main>
         </>
