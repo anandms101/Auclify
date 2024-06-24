@@ -3,10 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Inter as FontSans } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-
+import "@knocklabs/react/dist/index.css";
 
 import { cn } from "@/lib/utils"
 import { Header } from "./header";
+import { AppKnockProviders } from "./knock-provider";
+import { SessionProvider } from "next-auth/react";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -38,8 +40,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
+          <SessionProvider>
+            <AppKnockProviders>
+              <Header />
+              {children}
+            </AppKnockProviders>
+          </SessionProvider>
+          
         </ThemeProvider>
       </body>
     </html>

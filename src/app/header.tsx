@@ -1,15 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import { SignOut } from "@/components/sign-out";
-import { auth } from "@/auth";
 import { SignIn } from "@/components/sign-in";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu"
+import { useRef, useState } from "react";
+import {
+    NotificationCell,
+    NotificationFeedPopover,
+    NotificationIconButton,
+} from "@knocklabs/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 
-export async function Header() {
-    const session = await auth();
+export function Header() {
+    const [isVisible, setIsVisible] = useState(false);
+    const notifButtonRef = useRef(null);
+    const session = useSession();
+
+    const userId = session?.data?.user?.id;
 
     return (
         <>
@@ -45,8 +58,31 @@ export async function Header() {
                         </NavigationMenuItem>
                     </div>
                     <div className="flex flex-row mr-4 items-center gap-4">
-                        <span className="pr-2">{session?.user?.name}</span>
-                        <span>{session ? <SignOut /> : <SignIn />}</span>
+                        <NotificationIconButton ref={notifButtonRef}
+                            onClick={(e) => setIsVisible(!isVisible)} />
+                        <NotificationFeedPopover
+                            buttonRef={notifButtonRef}
+                            isVisible={isVisible}
+                            onClose={() => setIsVisible(false)} />
+                        <span className="pr-2">{session?.data?.user?.name}</span>
+                        <span>
+                            {/* {session ? <SignOut /> : <SignIn />} */}
+                            {userId ? (
+                                <Button
+                                    onClick={() =>
+                                        signOut({
+                                            callbackUrl: "/",
+                                        })
+                                    }
+                                >
+                                    Sign Out
+                                </Button>
+                            ) : (
+                                <Button type="submit" onClick={() => signIn()}>
+                                    Sign In
+                                </Button>
+                            )}
+                        </span>
                         <span><ModeToggle ></ModeToggle></span>
                     </div>
                 </NavigationMenuList>
