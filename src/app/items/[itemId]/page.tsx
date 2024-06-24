@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { createBidAction } from "@/app/items/[itemId]/actions";
 import { formatDistance } from 'date-fns';
+import { IndianRupee } from "lucide-react";
 
 export default async function ItemPage(
     { params: { itemId } }: { params: { itemId: string } }
@@ -51,7 +52,8 @@ export default async function ItemPage(
                 </CardContent>
                 <CardFooter>
                     <span className="flex flex-col">
-                        <span>Starting price <Badge>{item.startingPrice}</Badge></span>
+                        <span>Current Bid <Badge>{item.currentBid}</Badge></span>
+                        <span>Starting price <Badge variant="outline">{item.startingPrice}</Badge></span>
                         <span>Bid intervel <Badge variant="secondary">{item.bidInterval}</Badge></span>
                     </span>
                 </CardFooter>
@@ -69,6 +71,7 @@ export default async function ItemPage(
                     <CardContent>
                         {allBids.map((bid) => (
                             <div key={bid.id} className="flex flex-row gap-6">
+                                <span className="flex flex-row"> <Badge variant="outline"><IndianRupee className="size-3" />{bid.amount}</Badge></span>
                                 <span className="font-bold ">{bid.user.name}</span>
                                 <span>{formatDate(bid.timestamp)}</span>
                             </div>
