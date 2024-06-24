@@ -19,7 +19,13 @@ export default async function ItemPage(
     if (!item) {
         return (
             <>
-                <h1>Item not found</h1>
+                <div className="flex flex-col space-y-4 justify-center items-center container mx-auto py-12">
+                    <h2 className="font-bold text-xl">stop wandering!</h2>
+                    <Image src="/404notFound.svg" width={200} height={200} alt="Empty Cart" />
+                    <Link href='/'>
+                        <Button >Go to HomePage</Button>
+                    </Link>
+                </div>
             </>
         )
     }
@@ -30,7 +36,7 @@ export default async function ItemPage(
 
     const CardComponent = ({ item }: { item: Item }) => {
         return (
-            <Card key={item.id}>
+            <Card key={item.id} className="flex flex-col space-y-4 justify-center items-center">
                 <CardHeader>
                     <CardTitle>Buy {item.name}</CardTitle>
                 </CardHeader>
@@ -80,12 +86,24 @@ export default async function ItemPage(
     const CurrentBidsComponent = () => {
         return (
             <>
-                {bids.map((bid) => (
-                    <div key={bid.id} >
-                        <span>{bid.bidder}</span>
-                        <span>{bid.amount}</span>
-                    </div>
-                ))}
+                <Card className="border-none shadow-none flex flex-col space-y-4 justify-center items-center">
+                    <CardHeader>
+                        <CardTitle>Bids placed</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {bids.map((bid) => (
+                            <div key={bid.id}>
+                                <span>{bid.bidder}</span>
+                                <span>{bid.amount}</span>
+                            </div>
+                        ))}
+                    </CardContent>
+                    <CardFooter>
+                        <span className="flex flex-col">
+                            <Link href="/"><Button> Place a Bid </Button></Link>
+                        </span>
+                    </CardFooter>
+                </Card>
             </>
         )
     }
@@ -93,21 +111,33 @@ export default async function ItemPage(
     const EmptyBidsComponent = () => {
         return (
             <>
-                <h2>No Bids placed for this item as of now </h2>
+                <Card className="border-none shadow-none flex flex-col space-y-4 justify-center items-center">
+                    <CardHeader>
+                        <CardTitle>No Bids placed</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Image src="/noBid.svg" width={200} height={200} alt="No Bids" />
+                    </CardContent>
+                    <CardFooter>
+                        <span className="flex flex-col">
+                            <Link href="/"><Button> Place a Bid </Button></Link>
+                        </span>
+                    </CardFooter>
+                </Card>
             </>
         )
     }
 
     return (
         <>
-            <div className="grid grid-cols-2 gap-8 m-4">
+            <main className="grid grid-cols-2 gap-4 container mx-auto py-12" style={{gridTemplateColumns: '1fr 1.5fr'}}>
                 <div>
                     <CardComponent item={item} />
                 </div>
                 <div>
                     {bids.length === 0 ? <EmptyBidsComponent /> : <CurrentBidsComponent />}
                 </div>
-            </div>
+            </main>
         </>
     )
 }
