@@ -15,6 +15,7 @@ import {
 } from "@knocklabs/react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { IndianRupee } from "lucide-react";
 
 
 export function Header() {
@@ -60,10 +61,32 @@ export function Header() {
                     <div className="flex flex-row mr-4 items-center gap-4">
                         <NotificationIconButton ref={notifButtonRef}
                             onClick={(e) => setIsVisible(!isVisible)} />
+                        {/* <NotificationFeedPopover
+                            buttonRef={notifButtonRef}
+                            isVisible={isVisible}
+                            onClose={() => setIsVisible(false)} /> */}
                         <NotificationFeedPopover
                             buttonRef={notifButtonRef}
                             isVisible={isVisible}
-                            onClose={() => setIsVisible(false)} />
+                            onClose={() => setIsVisible(false)}
+                            renderItem={({ item, ...props }) => (
+                                <NotificationCell {...props} item={item}>
+                                    <div className="rounded-xl">
+                                        <Link
+                                            className="text-blue-400 hover:text=blue-500"
+                                            onClick={() => {
+                                                setIsVisible(false);
+                                            }}
+                                            href={`/items/${item?.data?.itemId}`}
+                                        >
+                                            Someone outbidded you on{" "}
+                                            <span className="font-bold">{item?.data?.itemName}</span>{" "}
+                                            by <IndianRupee />{item?.data?.bidAmount}
+                                        </Link>
+                                    </div>
+                                </NotificationCell>
+                            )}
+                        />
                         <span className="pr-2">{session?.data?.user?.name}</span>
                         <span>
                             {/* {session ? <SignOut /> : <SignIn />} */}

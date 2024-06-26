@@ -37,11 +37,11 @@ export default async function Home() {
         <CardContent>
           <Image src={getImageUrlFromR2Url(item.image)} alt={item.name} width={200} height={200} />
         </CardContent>
-        <CardFooter>
+        {/* <CardFooter>
           <Link href={`/items/${item.id}/`}>
             <Button>Buy this item</Button>
           </Link>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     )
   }
