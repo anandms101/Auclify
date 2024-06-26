@@ -17,16 +17,15 @@ export default async function Home() {
   const session = await auth();
   const userId = session?.user?.id;
 
+  if (!session || !session.user || !userId) {
+    return null
+  }
+
   const allItems = await database.query.items.findMany(
     {
       where:ne(items.userId, userId)
     }
   );
-  
-
-  if (!session || !session.user) {
-    return null
-  }
 
   const EmptyItemsPageComponent = () => {
     return (
