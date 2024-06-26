@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { SignOut } from "@/components/sign-out";
-import { SignIn } from "@/components/sign-in";
 import Link from "next/link";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuList, NavigationMenuLink } from "@radix-ui/react-navigation-menu";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -41,55 +39,57 @@ export function Header() {
                             </Link>
                         </NavigationMenuItem>
                         <NavigationMenuItem>
-                            <Link href="/" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Available Item(s)
-                                </NavigationMenuLink>
-                            </Link>
-                            <Link href="/items/create/" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    Sell an Item
-                                </NavigationMenuLink>
-                            </Link>
-                            <Link href="/items/myItems/" legacyBehavior passHref>
-                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                                    My Item(s)
-                                </NavigationMenuLink>
-                            </Link>
+                            {userId ? (
+                                <>
+                                    <Link href="/" legacyBehavior passHref>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Available Item(s)
+                                        </NavigationMenuLink>
+                                    </Link>
+                                    <Link href="/items/create/" legacyBehavior passHref>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            Sell an Item
+                                        </NavigationMenuLink>
+                                    </Link>
+                                    <Link href="/items/myItems/" legacyBehavior passHref>
+                                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                                            My Item(s)
+                                        </NavigationMenuLink>
+                                    </Link>
+                                </>
+                            ) : null}
                         </NavigationMenuItem>
                     </div>
                     <div className="flex flex-row mr-4 items-center gap-4">
-                        <NotificationIconButton ref={notifButtonRef}
-                            onClick={(e) => setIsVisible(!isVisible)} />
-                        {/* <NotificationFeedPopover
-                            buttonRef={notifButtonRef}
-                            isVisible={isVisible}
-                            onClose={() => setIsVisible(false)} /> */}
-                        <NotificationFeedPopover
-                            buttonRef={notifButtonRef}
-                            isVisible={isVisible}
-                            onClose={() => setIsVisible(false)}
-                            renderItem={({ item, ...props }) => (
-                                <NotificationCell {...props} item={item}>
-                                    <div className="rounded-xl">
-                                        <Link
-                                            className="text-blue-400 hover:text=blue-500"
-                                            onClick={() => {
-                                                setIsVisible(false);
-                                            }}
-                                            href={`/items/${item?.data?.itemId}`}
-                                        >
-                                            Someone outbidded you on{" "}
-                                            <span className="font-bold">{item?.data?.itemName}</span>{" "}
-                                            by <IndianRupee />{item?.data?.bidAmount}
-                                        </Link>
-                                    </div>
-                                </NotificationCell>
-                            )}
-                        />
+                        {userId ? (<>
+                            <NotificationIconButton ref={notifButtonRef}
+                                onClick={(e) => setIsVisible(!isVisible)} />
+                            <NotificationFeedPopover
+                                buttonRef={notifButtonRef}
+                                isVisible={isVisible}
+                                onClose={() => setIsVisible(false)}
+                                renderItem={({ item, ...props }) => (
+                                    <NotificationCell {...props} item={item}>
+                                        <div className="rounded-xl">
+                                            <Link
+                                                className="text-blue-400 hover:text=blue-500"
+                                                onClick={() => {
+                                                    setIsVisible(false);
+                                                }}
+                                                href={`/items/${item?.data?.itemId}`}
+                                            >
+                                                Someone outbidded you on{" "}
+                                                <span className="font-bold">{item?.data?.itemName}</span>{" "}
+                                                by <IndianRupee />{item?.data?.bidAmount}
+                                            </Link>
+                                        </div>
+                                    </NotificationCell>
+                                )}
+                            />
+                        </>
+                        ) : null}
                         <span className="pr-2">{session?.data?.user?.name}</span>
                         <span>
-                            {/* {session ? <SignOut /> : <SignIn />} */}
                             {userId ? (
                                 <Button
                                     onClick={() =>

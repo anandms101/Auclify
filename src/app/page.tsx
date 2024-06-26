@@ -5,7 +5,8 @@ import Image from "next/image";
 import { env } from "@/env";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Item } from "@/db/schema";
+import { Item, items } from "@/db/schema";
+import { eq, ne } from "drizzle-orm";
 
 function getImageUrlFromR2Url(itemImageName: string) {
   return `${env.NEXT_PUBLIC_BUCKET_URL}${itemImageName}`;
@@ -13,8 +14,15 @@ function getImageUrlFromR2Url(itemImageName: string) {
 
 export default async function Home() {
 
-  const allItems = await database.query.items.findMany();
-  const session = await auth()
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  const allItems = await database.query.items.findMany(
+    {
+      where:ne(items.userId, userId)
+    }
+  );
+  
 
   if (!session || !session.user) {
     return null

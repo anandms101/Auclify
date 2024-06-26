@@ -10,10 +10,17 @@ import Link from "next/link";
 import { createBidAction } from "@/app/items/[itemId]/actions";
 import { formatDistance } from 'date-fns';
 import { IndianRupee } from "lucide-react";
+import { auth } from "@/auth";
 
 export default async function ItemPage(
     { params: { itemId } }: { params: { itemId: string } }
 ) {
+
+    const session = await auth();
+    
+    if(!session || !session.user) {
+        return null;
+    }
 
     const item = await database.query.items.findFirst({
         where: eq(items.id, parseInt(itemId))

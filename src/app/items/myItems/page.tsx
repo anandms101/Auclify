@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { env } from "@/env";
-import { eq, is } from "drizzle-orm";
+import { eq} from "drizzle-orm";
 import { items, Item } from "@/db/schema";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -15,7 +15,7 @@ function getImageUrlFromR2Url(itemImageName: string) {
 export default async function Home() {
 
 
-  const session = await auth()
+  const session = await auth();
 
   if (!session || !session.user) {
     return null
@@ -37,11 +37,6 @@ export default async function Home() {
         <CardContent>
           <Image src={getImageUrlFromR2Url(item.image)} alt={item.name} width={200} height={200} />
         </CardContent>
-        {/* <CardFooter>
-          <Link href={`/items/${item.id}/`}>
-            <Button>Buy this item</Button>
-          </Link>
-        </CardFooter> */}
       </Card>
     )
   }
