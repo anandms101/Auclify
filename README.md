@@ -6,6 +6,6 @@
 
 <h2>Project Screenshots:</h2>
 
-<img src="https://github.com/anandms101/auclify/blob/main/public/screenshots/avilableItemsLight.png" alt="project-screenshot" width="1000" height="1000">
+<img src="https://github.com/anandms101/auclify/blob/main/public/screenshots/avilableItemsLight.png" alt="project-screenshot" width="1000" height="400">
 
 <img src="" alt="project-screenshot" width="400" height="400/">
