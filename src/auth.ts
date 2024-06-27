@@ -37,5 +37,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   providers: [Google],
-  secret: env.SECRET,
+  secret: env.NEXTAUTH_SECRET,
 });
