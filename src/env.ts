@@ -10,6 +10,8 @@ export const env = createEnv({
     CLOUDFLARE_SECRET_ACCESS_KEY: z.string().min(1),
     BUCKET_NAME: z.string().min(1),
     KNOCK_SECRET_KEY: z.string().min(1),
+    NEXTAUTH_SECRET: z.string().min(1),
+    SECRET: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_BUCKET_URL: z.string().url(),
@@ -25,7 +27,10 @@ export const env = createEnv({
     BUCKET_NAME: process.env.BUCKET_NAME,
     NEXT_PUBLIC_BUCKET_URL: process.env.NEXT_PUBLIC_BUCKET_URL,
     NEXT_PUBLIC_KNOCK_FEED_ID: process.env.NEXT_PUBLIC_KNOCK_FEED_ID,
-    NEXT_PUBLIC_KNOCK_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_KNOCK_PUBLIC_API_KEY,
+    NEXT_PUBLIC_KNOCK_PUBLIC_API_KEY:
+      process.env.NEXT_PUBLIC_KNOCK_PUBLIC_API_KEY,
     KNOCK_SECRET_KEY: process.env.KNOCK_SECRET_KEY,
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+    SECRET: process.env.SECRET,
   },
 });

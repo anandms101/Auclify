@@ -3,6 +3,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
 import { database } from "@/db/database";
 import { accounts, sessions, users, verificationTokens } from "@/db/schema";
+import { env } from "@/env";
 
 declare module "next-auth" {
   /**
@@ -36,5 +37,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   providers: [Google],
-  secret: process.env.SECRET,
+  secret: env.SECRET,
 });
