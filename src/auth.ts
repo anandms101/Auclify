@@ -4,6 +4,8 @@ import Google from "next-auth/providers/google";
 import { database } from "@/db/database";
 import { accounts, sessions, users, verificationTokens } from "@/db/schema";
 import { env } from "@/env";
+import GoogleProvider from "next-auth/providers/google";
+
 
 declare module "next-auth" {
   /**
@@ -36,6 +38,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-  providers: [Google],
+  // providers: [Google],
+  providers: [
+    GoogleProvider({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+    })
+  ],
   secret: process.env.NEXTAUTH_SECRET,
 });
