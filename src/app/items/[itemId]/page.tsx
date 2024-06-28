@@ -10,7 +10,7 @@ import Link from "next/link";
 import { createBidAction } from "@/app/items/[itemId]/actions";
 import { formatDistance } from 'date-fns';
 import { IndianRupee } from "lucide-react";
-import { auth } from "@/auth";
+import { auth } from "@/app/api/auth/[...nextauth]/auth";
 
 export default async function ItemPage(
     { params: { itemId } }: { params: { itemId: string } }

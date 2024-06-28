@@ -2,7 +2,7 @@
 
 import { database } from "@/db/database";
 import { items } from "@/db/schema";
-import { auth } from "@/auth";
+import { auth } from "@/app/api/auth/[...nextauth]/auth";
 import { redirect } from "next/navigation";
 import { getSignedUrlForS3Object } from "@/lib/s3";
 import { start } from "repl";

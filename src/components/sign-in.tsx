@@ -1,5 +1,5 @@
 
-import { signIn } from "@/auth"
+import { signIn } from "@/app/api/auth/[...nextauth]/auth"
 import { Button } from "./ui/button"
 
 export function SignIn() {
